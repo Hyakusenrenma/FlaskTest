@@ -3,12 +3,16 @@
 
 {% block content %}
 <script type="text/javascript">
-function set_openid(openid, pr)
+function set_openid(openid, pr){#设置openid  pr平台名#}
 {
+    {# openid搜索username #}
     u = openid.search('<username>')
+    console.log(u)
     if (u != -1) {
+        {# 如果找到username #}
         // openid requires username
         //prompt 弹窗
+        //手动输入username
         user = prompt('Enter your ' + pr + ' username:')
         openid = openid.substr(0, u) + user
     }

@@ -1,6 +1,6 @@
 from flask import render_template,flash,redirect,session,url_for,request,g
 from app import app,db,lm,oid
-from .forms import FlaskForm
+from .forms import LoginForm
 from flask_login import login_user,logout_user,current_user,login_required
 from .models import User
 
@@ -30,7 +30,7 @@ def login():
     if g.user is not None and g.user.is_authenticated:
         #判断g.user是否是认证用户
         return redirect(url_for('index'))
-    form = FlaskForm()
+    form = LoginForm()
     if form.validate_on_submit():
         session['remember_me'] = form.remember_me.data
         return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
@@ -70,17 +70,20 @@ def before_request():
 def load_user(id):
     return User.query.get(int(id))
 
+
+
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
 @app.route('/user/<nickname>')
-@login_required
+# @login_required
 def user(nickname):
     user = User.query.filter_by(nickname=nickname).first()
     if user == None:
-        flash('User' + nickname + 'not found.')
+        flash('User ' + nickname + ' not found.')
         return redirect(url_for('index'))
     posts = [
         { 'author': user, 'body': 'Test post #1' },

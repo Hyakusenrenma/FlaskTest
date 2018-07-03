@@ -20,7 +20,7 @@ class User(db.Model):
 
     is_authenticated = True
     is_active = True
-    is_anonymous = True
+    is_anonymous = False
 
 
     def get_id(self):
