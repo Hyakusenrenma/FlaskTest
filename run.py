@@ -5,5 +5,11 @@ from app import app  #导入app文件中__init__中app=Flask(__name__)
 #基于此特性，为测试驱动开发提供了很好的支持，我们可以在每个模块中写上测试代码
 #这些测试代码仅当模块被Python直接执行时才会运行，代码和测试完美的结合在一起。
 #
+
+@app.route('/', methods=['GET'], strict_slashes=False)
+def namespaces():
+    response = make_response("hello")
+    return response
+
 app.debug = True  #设置debug模式
-app.run() #link start
+app.run(host='0.0.0.0', port=6688, debug=True, use_reloader=False)
